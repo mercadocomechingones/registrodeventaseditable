@@ -3,64 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Registro de Ventas — Pro</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Registro de Ventas — Vista privada</title>
   <style>
-    :root {
-      --bg: #f0f2f5;
-      --text: #333;
-      --header: #1a73e8;
-      --table-bg: white;
-      --th-bg: #f7f9fc;
-      --row-hover: #f1f5fb;
-      --button-bg: #1a73e8;
-      --button-hover: #155ab6;
-    }
-    [data-theme="dark"] {
-      --bg: #121212;
-      --text: #eee;
-      --header: #8ab4f8;
-      --table-bg: #1e1e1e;
-      --th-bg: #2c2c2c;
-      --row-hover: #333;
-      --button-bg: #8ab4f8;
-      --button-hover: #5f9cf2;
-    }
-
-    body { font-family: 'Inter', sans-serif; margin: 20px; background: var(--bg); color: var(--text); }
-    header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    h1 { font-size: 28px; color: var(--header); margin: 0; }
-    .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-    input, select, button { padding: 10px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; }
-    button { background-color: var(--button-bg); color: white; border: none; cursor: pointer; transition: background 0.2s; }
-    button:hover { background-color: var(--button-hover); }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--table-bg); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    th, td { padding: 12px 10px; border-bottom: 1px solid #eee; text-align: left; }
-    th { background: var(--th-bg); cursor: pointer; font-weight: 600; color: #555; }
-    tr:hover { background: var(--row-hover); }
-    .right { text-align: right; }
-    #loading { color: #666; margin-top: 20px; }
-    .muted { color: #777; font-size: 14px; margin-top: 8px; }
-    #pager button { padding: 6px 10px; margin: 2px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer; font-size: 13px; }
-    #pager button:hover { background: #e0e7ff; }
-    #pager strong { margin: 0 5px; font-weight: 600; }
-    @media (max-width: 700px) { th, td { font-size: 12px; padding: 8px; } input, select, button { font-size: 12px; padding: 8px; } }
+    body{font-family:Inter,system-ui,Arial;margin:18px;background:#f7f7f8;color:#111;transition:background 0.3s,color 0.3s;}
+    body.dark{background:#111;color:#eee;}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}
+    h1{font-size:20px;margin:0}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    input,button,select{padding:8px;border-radius:6px;border:1px solid #ccd0d6;background:white;color:#111}
+    body.dark input, body.dark select, body.dark button{background:#222;border:1px solid #444;color:#eee;}
+    table{width:100%;border-collapse:collapse;margin-top:12px;background:white;border-radius:6px;overflow:hidden;transition:background 0.3s,color 0.3s;}
+    body.dark table{background:#222;color:#eee;}
+    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+    body.dark th, body.dark td{border-color:#444;}
+    th{background:#fafafa;cursor:pointer;user-select:none;transition:background 0.3s;}
+    body.dark th{background:#333;}
+    tr:hover{background:#fcfcfe}
+    body.dark tr:hover{background:#333;}
+    .muted{color:#666;font-size:13px;transition:color 0.3s;}
+    body.dark .muted{color:#aaa;}
+    #loading{color:#666;transition:color 0.3s;}
+    body.dark #loading{color:#aaa;}
+    .right{text-align:right}
+    .badge{display:inline-block;padding:4px 8px;border-radius:12px;background:#eef}
+    .export{margin-left:6px}
+    .themeToggle{cursor:pointer;background:#000;color:#fff;padding:6px 10px;border-radius:6px;font-size:13px;}
+    body.dark .themeToggle{background:#eee;color:#000;}
+    @media (max-width:700px){th,td{font-size:13px;padding:6px}}
+    a.whatsappBtn{display:inline-block;padding:6px 10px;background:#25D366;color:white;border-radius:6px;text-decoration:none;font-size:13px;}
+    body.dark a.whatsappBtn{color:white;}
   </style>
 </head>
 <body>
   <header>
-    <h1>Registro de Ventas</h1>
+    <h1>Registro de ventas</h1>
     <div class="controls">
-      <input id="search" placeholder="Buscar por cliente, producto o id" />
-      <input id="producto" placeholder="Filtrar por producto" />
-      <input id="minTotal" type="number" placeholder="Total mínimo" />
-      <input id="maxTotal" type="number" placeholder="Total máximo" />
+      <input id="search" placeholder="Buscar por cliente o producto" />
+      <input id="filterID" placeholder="Filtrar por ID" />
+      <input id="filterCelular" placeholder="Filtrar por celular" />
       <input id="from" type="date" title="Fecha desde" />
       <input id="to" type="date" title="Fecha hasta" />
-      <select id="perPage"><option value="10">10 por página</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+      <select id="perPage">
+        <option value="10">10 por página</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
       <button id="refresh">Actualizar</button>
-      <button id="export">Exportar CSV</button>
-      <button id="toggleTheme">🌙 Modo oscuro</button>
+      <button id="export" class="export">Exportar CSV</button>
+      <button id="themeToggle" class="themeToggle">Modo Oscuro</button>
     </div>
   </header>
 
@@ -75,27 +66,29 @@
         <th data-key="detalle_compra">Detalle</th>
         <th data-key="nombre_cliente">Cliente</th>
         <th data-key="celular_cliente">Celular</th>
+        <th>Notificar</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
-
-  <nav id="pager"></nav>
+  <nav id="pager" style="margin-top:12px"></nav>
 
   <script>
+    // ===== CONFIG =====
     const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzdZ1Qsrzqopm4g4s0NZJK7AKm6plFVoKvpWdymZ-MOIAktQCWsa6Ki4te4UqJUfnfK/exec';
-    const url = APP_SCRIPT_URL;
-    let rawData = [], filtered = [], sortKey = null, sortDir = 1, currentPage = 1;
-    let lastCount = 0;
+    const telefonoNegocio = '5492664212722'; // tu número de WhatsApp
+    // ==================
+
+    let rawData=[], filtered=[], sortKey=null, sortDir=1, currentPage=1;
+    let lastDataSnapshot = [];
 
     const el = {
       loading: document.getElementById('loading'),
       table: document.getElementById('ventasTable'),
       tbody: document.querySelector('#ventasTable tbody'),
       search: document.getElementById('search'),
-      producto: document.getElementById('producto'),
-      minTotal: document.getElementById('minTotal'),
-      maxTotal: document.getElementById('maxTotal'),
+      filterID: document.getElementById('filterID'),
+      filterCelular: document.getElementById('filterCelular'),
       from: document.getElementById('from'),
       to: document.getElementById('to'),
       perPage: document.getElementById('perPage'),
@@ -103,36 +96,22 @@
       exportBtn: document.getElementById('export'),
       pager: document.getElementById('pager'),
       summary: document.getElementById('summary'),
-      toggleTheme: document.getElementById('toggleTheme')
+      themeToggle: document.getElementById('themeToggle')
     };
 
-    // Restaurar tema guardado
-    if(localStorage.getItem('theme')==='dark'){
-      document.body.setAttribute('data-theme','dark');
-      el.toggleTheme.textContent='☀️ Modo claro';
+    function formatDateTime(d){
+      if(!d) return '';
+      const pad=(n)=>n.toString().padStart(2,'0');
+      return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} - ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
     }
 
-    el.toggleTheme.addEventListener('click', () => {
-      if(document.body.getAttribute('data-theme')==='dark'){
-        document.body.removeAttribute('data-theme');
-        el.toggleTheme.textContent='🌙 Modo oscuro';
-        localStorage.setItem('theme','light');
-      } else {
-        document.body.setAttribute('data-theme','dark');
-        el.toggleTheme.textContent='☀️ Modo claro';
-        localStorage.setItem('theme','dark');
-      }
-    });
-
-    function formatDateTime(date){
-      if(!date) return '';
-      const d=('0'+date.getDate()).slice(-2);
-      const m=('0'+(date.getMonth()+1)).slice(-2);
-      const y=date.getFullYear();
-      const hh=('0'+date.getHours()).slice(-2);
-      const mm=('0'+date.getMinutes()).slice(-2);
-      const ss=('0'+date.getSeconds()).slice(-2);
-      return `${d}/${m}/${y} - ${hh}:${mm}:${ss}`;
+    function mensajeWhatsApp(venta){
+      return `Hola, se reporta un cambio en la venta ID ${venta.id}.
+Cliente: ${venta.nombre_cliente}
+Celular: ${venta.celular_cliente}
+Total: ARS ${venta.total}
+Detalle: ${venta.detalle_compra}
+Por favor indica si se canceló o modificó la compra.`;
     }
 
     async function fetchSheet(){
@@ -140,44 +119,62 @@
       el.loading.style.display='block';
       el.table.style.display='none';
       try{
-        const res=await fetch(url);
-        const json=await res.json();
-        const rows=json.rows||[];
-        const newData=rows.map(normalizeRow);
+        const res = await fetch(APP_SCRIPT_URL);
+        const json = await res.json();
+        const rows = (json.rows||[]).map(normalizeRow);
 
-        // Notificación de nuevas ventas
-        if(newData.length>lastCount){
-          const nuevas=newData.length-lastCount;
-          if(Notification.permission==='granted'){
-            new Notification('Nueva venta',{body:`Hay ${nuevas} nueva(s) venta(s)`});
-          } else if(Notification.permission!=='denied'){
-            Notification.requestPermission();
-          }
+        const nuevos = rows.filter(r => !lastDataSnapshot.find(l => l.id==r.id));
+        const modificados = rows.filter(r => {
+          const old = lastDataSnapshot.find(l => l.id==r.id);
+          return old && (old.total!==r.total || old.detalle_compra!==r.detalle_compra);
+        });
+
+        if(Notification.permission==='granted'){
+          if(nuevos.length) new Notification('Nueva(s) venta(s)', {body:`Se agregaron ${nuevos.length} venta(s)`});
+          if(modificados.length) new Notification('Venta(s) modificada(s)', {body:`Se modificaron ${modificados.length} venta(s)`});
         }
-        lastCount=newData.length;
-        rawData=newData;
+
+        lastDataSnapshot = rows;
+        rawData = rows;
         el.loading.style.display='none';
         el.table.style.display='';
         applyFilters();
-      } catch(err){ el.loading.textContent='Error cargando la API: '+err.message; console.error(err); }
+      }catch(err){
+        el.loading.textContent='Error cargando la hoja: '+err.message;
+        console.error(err);
+      }
     }
 
     function normalizeRow(r){
-      const out={}, mapKey=k=>k?k.toString().toLowerCase().replace(/\s+/g,'_'):'';
-      const norm={};
-      for(const k in r) norm[mapKey(k)]=r[k];
-      out.id=norm.id||'';
-      out.fecha_hora=norm.fecha_hora||'';
-      out.total=parseNumber(norm.total||'0');
-      out.detalle_compra=norm.detalle_compra||'';
-      out.nombre_cliente=norm.nombre_cliente||'';
-      out.celular_cliente=norm.celular_cliente||'';
-      out._date=parseDateTime(out.fecha_hora);
+      const mapKey = k=>k?k.toString().toLowerCase().replace(/\s+/g,'_'):'';
+      const norm = {};
+      for(const k in r) norm[mapKey(k)] = r[k];
+      const out = {};
+      out.id = norm.id||norm['#']||'';
+      out.fecha_hora = norm.fecha_hora||norm.fecha||'';
+      out.total = parseNumber(norm.total||'0');
+      out.detalle_compra = norm.detalle_compra||norm.detalle||'';
+      out.nombre_cliente = norm.nombre_cliente||norm.cliente||'';
+      out.celular_cliente = norm.celular_cliente||norm.celular||'';
+      out._date = parseDateTime(out.fecha_hora);
       return out;
     }
 
-    function parseNumber(v){ const s=v?.toString().replace(/[\$\s,]/g,'').replace(/\(.+\)/,''); const n=parseFloat(s); return isNaN(n)?0:n; }
-    function parseDateTime(s){ if(!s) return null; const m=s.toString().match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/); if(!m) return new Date(s); const day=parseInt(m[1]), month=parseInt(m[2])-1, year=parseInt(m[3]); const hh=parseInt(m[4]||0), mm=parseInt(m[5]||0), ss=parseInt(m[6]||0); return new Date(year<100?2000+year:year, month, day, hh, mm, ss); }
+    function parseNumber(v){
+      if(v==null) return 0;
+      const s=v.toString().replace(/[\$\s,]/g,'').replace(/\(.+\)/,'');
+      const n=parseFloat(s);
+      return isNaN(n)?0:n;
+    }
+
+    function parseDateTime(s){
+      if(!s) return null;
+      const m=s.toString().match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+      if(!m) return new Date(s);
+      const day=parseInt(m[1],10), month=parseInt(m[2],10)-1, year=parseInt(m[3],10);
+      const hh=parseInt(m[4]||0,10), mm=parseInt(m[5]||0,10), ss=parseInt(m[6]||0,10);
+      return new Date(year<100?2000+year:year, month, day, hh, mm, ss);
+    }
 
     function renderTable(data){
       el.tbody.innerHTML='';
@@ -192,6 +189,7 @@
           <td>${escapeHtml(row.detalle_compra)}</td>
           <td>${escapeHtml(row.nombre_cliente)}</td>
           <td>${escapeHtml(row.celular_cliente)}</td>
+          <td><a href="https://wa.me/${telefonoNegocio}?text=${encodeURIComponent(mensajeWhatsApp(row))}" target="_blank" class="whatsappBtn">📩 Avisar</a></td>
         `;
         el.tbody.appendChild(tr);
       }
@@ -199,64 +197,96 @@
       el.summary.textContent=`Mostrando ${Math.min(data.length,pageData.length)} de ${data.length} ventas. Total acumulado: ARS ${sumTotals(data).toLocaleString(undefined,{minimumFractionDigits:2})}`;
     }
 
-    function sumTotals(data){ return data.reduce((s,r)=>s+(r.total||0),0); }
+    function sumTotals(data){return data.reduce((s,r)=>s+(r.total||0),0);}
 
     function renderPager(totalItems){
       const per=parseInt(el.perPage.value,10);
       const pages=Math.max(1,Math.ceil(totalItems/per));
       if(currentPage>pages) currentPage=pages;
-      if(pages<=1){ el.pager.innerHTML=''; return; }
       let html='';
+      if(pages<=1){el.pager.innerHTML='';return;}
       if(currentPage>1) html+=`<button onclick="goPage(${currentPage-1})">«</button>`;
-      for(let i=1;i<=pages;i++){ html+=i===currentPage?`<strong>${i}</strong>`:`<button onclick="goPage(${i})">${i}</button>`; }
+      for(let i=1;i<=pages;i++){
+        if(i===currentPage) html+=`<strong style="margin:0 6px">${i}</strong>`;
+        else html+=`<button onclick="goPage(${i})" style="margin:0 3px">${i}</button>`;
+      }
       if(currentPage<pages) html+=`<button onclick="goPage(${currentPage+1})">»</button>`;
       el.pager.innerHTML=html;
     }
 
-    window.goPage=function(p){ currentPage=p; applyFilters(); };
+    window.goPage=function(p){currentPage=p;applyFilters();}
 
     function applyFilters(){
       const q=el.search.value.trim().toLowerCase();
-      const prod=el.producto.value.trim().toLowerCase();
-      const min=parseFloat(el.minTotal.value)||0;
-      const max=parseFloat(el.maxTotal.value)||Infinity;
+      const idQ=el.filterID.value.trim();
+      const celQ=el.filterCelular.value.trim();
       const from=el.from.value?new Date(el.from.value+'T00:00:00'):null;
       const to=el.to.value?new Date(el.to.value+'T23:59:59'):null;
 
       filtered=rawData.filter(r=>{
         if(from && r._date && r._date<from) return false;
         if(to && r._date && r._date>to) return false;
-        if(r.total<min||r.total>max) return false;
-        if(prod && !r.detalle_compra.toLowerCase().includes(prod)) return false;
-        if(q){ const hay=[r.id,r.detalle_compra,r.nombre_cliente,r.celular_cliente,r.fecha_hora].join(' ').toLowerCase(); if(!hay.includes(q)) return false; }
-        return true;
+        if(idQ && r.id.toString()!==idQ) return false;
+        if(celQ && r.celular_cliente.toString().indexOf(celQ)===-1) return false;
+        if(!q) return true;
+        const hay=[r.id,r.detalle_compra,r.nombre_cliente,r.celular_cliente,r.fecha_hora].join(' ').toLowerCase();
+        return hay.indexOf(q)!==-1;
       });
 
-      if(sortKey){ filtered.sort((a,b)=>{ const va=a[sortKey],vb=b[sortKey]; if(va==null) return 1*sortDir; if(vb==null) return -1*sortDir; if(typeof va==='number'&&typeof vb==='number') return (va-vb)*sortDir; if(va instanceof Date && vb instanceof Date) return (va-vb)*sortDir; return va.toString().localeCompare(vb.toString())*sortDir; }); }
+      if(sortKey){
+        filtered.sort((a,b)=>{
+          const va=a[sortKey]; const vb=b[sortKey];
+          if(va==null) return 1*sortDir; if(vb==null) return -1*sortDir;
+          if(typeof va==='number' && typeof vb==='number') return (va-vb)*sortDir;
+          if(va instanceof Date && vb instanceof Date) return (va-vb)*sortDir;
+          return va.toString().localeCompare(vb.toString())*sortDir;
+        });
+      }
 
       renderTable(filtered);
     }
 
-    document.querySelectorAll('#ventasTable th').forEach(th=>{ th.addEventListener('click',()=>{ const key=th.dataset.key; sortKey===key?sortDir=-sortDir:(sortKey=key,sortDir=1); applyFilters(); }); });
+    document.querySelectorAll('#ventasTable th').forEach(th=>{
+      th.addEventListener('click',()=>{
+        const key=th.dataset.key;
+        if(sortKey===key) sortDir=-sortDir; else{sortKey=key; sortDir=1;}
+        applyFilters();
+      });
+    });
 
-    function escapeHtml(s){return s==null?'':String(s).replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\'':'&#39;'}[c]));}
+    function escapeHtml(s){if(s==null) return '';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-    [el.search,el.producto,el.minTotal,el.maxTotal,el.from,el.to].forEach(elm=>elm.addEventListener('input',()=>{currentPage=1; applyFilters();}));
-    el.perPage.addEventListener('change',()=>{currentPage=1; applyFilters();});
-    el.refresh.addEventListener('click',()=>fetchSheet());
-    el.exportBtn.addEventListener('click',()=>exportCSV(filtered.length?filtered:rawData));
+    el.search.addEventListener('input',()=>{currentPage=1;applyFilters();});
+    el.filterID.addEventListener('input',()=>{currentPage=1;applyFilters();});
+    el.filterCelular.addEventListener('input',()=>{currentPage=1;applyFilters();});
+    el.from.addEventListener('change',()=>{currentPage=1;applyFilters();});
+    el.to.addEventListener('change',()=>{currentPage=1;applyFilters();});
+    el.perPage.addEventListener('change',()=>{currentPage=1;applyFilters();});
+    el.refresh.addEventListener('click',()=> fetchSheet());
+    el.exportBtn.addEventListener('click',()=> exportCSV(filtered.length?filtered:rawData));
 
     function exportCSV(rows){
       const cols=['id','fecha_hora','total','detalle_compra','nombre_cliente','celular_cliente'];
       const lines=[cols.join(',')];
-      for(const r of rows){ lines.push(cols.map(c=>`"${String(r[c]||'').replace(/"/g,'""')}"`).join(',')); }
-      const blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'});
+      for(const r of rows){
+        const vals=cols.map(c=> `"${String(r[c]||'').replace(/"/g,'""')}"`);
+        lines.push(vals.join(','));
+      }
+      const blob=new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8;'});
       const url=URL.createObjectURL(blob);
-      const a=document.createElement('a'); a.href=url; a.download='ventas_export.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      const a=document.createElement('a'); a.href=url; a.download='ventas_export.csv'; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
     }
 
+    el.themeToggle.addEventListener('click',()=>{
+      document.body.classList.toggle('dark');
+      el.themeToggle.textContent=document.body.classList.contains('dark')?'Modo Claro':'Modo Oscuro';
+    });
+
+    if("Notification" in window && Notification.permission!=="granted") Notification.requestPermission();
+
     fetchSheet();
-    setInterval(fetchSheet,30000);
+    setInterval(fetchSheet,30000); // refresca cada 30s automáticamente
   </script>
 </body>
 </html>
